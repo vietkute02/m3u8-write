@@ -20,7 +20,7 @@ function m3u(obj) {
     }
   }
 
-  return playlist.join('\n')
+  return playlist.join('\n') + '\n'
 }
 
 function formatObj(obj) {
@@ -37,10 +37,10 @@ function formatObj(obj) {
   const value = obj[keys[0]]
   const upkey = keys[0].toUpperCase()
   const key = upkey.startsWith('EXT') ? '#'+upkey : `#EXT-X-${upkey}`
-
+  console.log('key: ', key, value)
   if (typeof value === 'undefined') {
     return key
-  } else if (isString(value) || typeof value === 'number') {
+  }else if (isString(value) || typeof value === 'number') {
     return key + ':' + value
   } else {
     return key + ":" + formatChildObj(value)
@@ -48,9 +48,15 @@ function formatObj(obj) {
 }
 
 function formatValue(s) {
-  return RegExp.prototype.test.call(/^[A-Z\d]+$/, s) ? s : `"${s}"`
+  return RegExp.prototype.test.call(/^[A-Z\d]+$/, s) ? `"${s}"` : `"${s}"`
 }
 
 function formatChildObj(o) {
-  return Object.keys(o).map(key => key.toUpperCase() + '=' + formatValue(o[key])).join(',')
+  return Object.keys(o).map(key => {
+    if (key === 'METHOD' || key === 'RESOLUTION' || key === 'BANDWIDTH') {
+      return key.toUpperCase() + '=' + o[key]
+    }else {
+      return key.toUpperCase() + '=' + formatValue(o[key])
+    }
+  }).join(',')
 }
