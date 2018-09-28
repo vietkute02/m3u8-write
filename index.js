@@ -37,7 +37,6 @@ function formatObj(obj) {
   const value = obj[keys[0]]
   const upkey = keys[0].toUpperCase()
   const key = upkey.startsWith('EXT') ? '#'+upkey : `#EXT-X-${upkey}`
-  console.log('key: ', key, value)
   if (typeof value === 'undefined') {
     return key
   }else if (isString(value) || typeof value === 'number') {
