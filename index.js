@@ -52,7 +52,7 @@ function formatValue(s) {
 
 function formatChildObj(o) {
   return Object.keys(o).map(key => {
-    if (key === 'METHOD' || key === 'RESOLUTION' || key === 'BANDWIDTH' || key === 'TIME-OFFSET') {
+    if (key === 'METHOD' || key === 'RESOLUTION' || key === 'BANDWIDTH' || key === 'TIME-OFFSET' || key === 'TYPE') {
       return key.toUpperCase() + '=' + o[key]
     }else {
       return key.toUpperCase() + '=' + formatValue(o[key])
